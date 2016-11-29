@@ -4,12 +4,13 @@ var filesCount = 0;
 var finished = false;
 
 $(document).ready(function(){
+	console.log("document ready");
 
 QB.createSession(QBUser, function(err, result) {
 	if (err) {
 		console.log('Something went wrong: ' + err);
 	} else {
-
+		console.log(result);
 		retrieveFiles();
 
 		// uploading files scroll event
@@ -32,7 +33,7 @@ QB.createSession(QBUser, function(err, result) {
 			// upload image
 			QB.content.createAndUpload({name: inputFile.name, file: inputFile, type: inputFile.type, size: inputFile.size, 'public': false}, function(err, response){
 				if (err) {
-					console.log(err);
+					console.log("error creating and uploading files: " + err);
 				} else {
 					console.log(response);
 
@@ -66,7 +67,7 @@ function retrieveFiles() {
 
 		QB.content.list({page: uploadPages, per_page: '9'}, function(error, response) {
 			if (error) {
-				console.log(error);
+				console.log("error retrieving list of files: " + error);
 			} else {
 				$.each(response.items, function(index, item){
 					var cur = this.blob;
